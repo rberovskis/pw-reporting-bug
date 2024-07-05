@@ -2,7 +2,7 @@ import { PlaywrightTestConfig } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
   testDir: "./tests",
-  reporter: [["list"], ["html", { outputFolder: "./reports/pw_reg" }]],
+  reporter: [["list"], ["html"]],
   //Fail the build on CI if you accidentally left test.only in the source code.
   timeout: 120000,
   workers: 3,

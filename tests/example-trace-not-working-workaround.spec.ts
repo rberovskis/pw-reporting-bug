@@ -1,15 +1,12 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page, BrowserContext } from "@playwright/test";
 
-test.describe("Example with trace no longer working", () => {
+test.describe("Example with trace working with the beforeAll block - workaround", () => {
   let page: Page;
+  let context: BrowserContext;
 
-  //This used to work just fine
   test.beforeAll(async ({ browser }) => {
-    // Same thing - no longer works as well
-    // const context = await browser.newContext();
-    // page = await context.newPage();
-
-    page = await (await browser.newContext()).newPage();
+    context = await browser.newContext();
+    page = await context.newPage();
   });
 
   test("has title", async () => {
@@ -31,8 +28,8 @@ test.describe("Example with trace no longer working", () => {
     ).toBeVisible();
   });
 
-  test.afterAll(async () => {
-    //Doesn't actually impact anything
+  test.afterAll("Cleanup", async () => {
     await page.close();
+    await context.close();
   });
 });
